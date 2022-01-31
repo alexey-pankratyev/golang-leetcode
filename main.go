@@ -8,8 +8,8 @@ import (
 	"github.com/alexey-pankratyev/golang-leetcode/packages/twosum"
 )
 
-var twosumArr = []int{1,2,3,4,5,6}
-var twosumTarget = 8
+var twosumArr = []int{1,2,6,7,5,20}
+var twosumTarget = 22 
 
 func main() {
     cmd := &cobra.Command{
