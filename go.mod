@@ -1,4 +1,4 @@
-module github.com/alexey-pankratyev/golang-leetcode
+module golang-leetcode
 
 go 1.16
 
