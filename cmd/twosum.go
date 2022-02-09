@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -14,11 +13,11 @@ import (
 // twosumCmd represents the twosum command
 var (
 	target int
-	rangeFlagNumbers []string
+	rangeFlagNumbers []int
 )
 
 var	twosumCmd = &cobra.Command{
-			  Use:   "twosum 1,2,3,4,5 --target 8",
+			  Use:   "twosum -r 1,2,3,4,5 -t 8 or twosum -r 1:5 -t 8",
 			  Short: "Implementation of the problem of two-sums for litcode",
 			  Long: `https://leetcode.com/problems/two-sum/ 
 Given an array of integers nums and an integer target,
@@ -26,12 +25,10 @@ return indices of the two numbers such that they add up to target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 You can return the answer in any order.`,
 	Run: func(cmd *cobra.Command, nums []string) {
-		var twosumArr []int
-		for _, ival := range rangeFlagNumbers {
-			itemp, _ := strconv.Atoi(ival)
-			twosumArr = append(twosumArr,itemp)
-		  }
-		result := TwoSum(twosumArr,target)
+		if verbose {
+			fmt.Printf("verbose: rangeFlagNumbers %v \n", rangeFlagNumbers)
+		}
+		result := TwoSum(rangeFlagNumbers,target)
 		fmt.Printf("result: %v \n", result)
 	},
 }
@@ -68,8 +65,8 @@ func init() {
 	// is called directly, e.g.:
 	twosumCmd.Flags().IntVarP (&target, "target","t", 0, "integer target")
 	twosumCmd.MarkFlagRequired("target")
-    twosumCmd.Flags().StringSliceVarP(
-        &rangeFlagNumbers, "range", "r", []string{"1:10"}, 
+    twosumCmd.Flags().IntSliceVarP(
+        &rangeFlagNumbers, "range", "r", []int{1:10}, 
         "Range of numbers. Optional",
     )
 	twosumCmd.MarkFlagRequired("rangeFlagNumbers")	
