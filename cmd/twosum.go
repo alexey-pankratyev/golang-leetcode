@@ -14,8 +14,11 @@ import (
 // twosumCmd represents the twosum command
 var (
 	target int
-	twosumCmd = &cobra.Command{
-			  Use:   "twosum 1 2 3 4 5 --target 8",
+	rangeFlagNumbers []string
+)
+
+var	twosumCmd = &cobra.Command{
+			  Use:   "twosum 1,2,3,4,5 --target 8",
 			  Short: "Implementation of the problem of two-sums for litcode",
 			  Long: `https://leetcode.com/problems/two-sum/ 
 Given an array of integers nums and an integer target,
@@ -24,14 +27,14 @@ You may assume that each input would have exactly one solution, and you may not 
 You can return the answer in any order.`,
 	Run: func(cmd *cobra.Command, nums []string) {
 		var twosumArr []int
-		for _, ival := range nums {
+		for _, ival := range rangeFlagNumbers {
 			itemp, _ := strconv.Atoi(ival)
 			twosumArr = append(twosumArr,itemp)
 		  }
-		TwoSum(twosumArr,target)
+		result := TwoSum(twosumArr,target)
+		fmt.Printf("result: %v \n", result)
 	},
 }
-)
 
 func TwoSum(nums []int, target int) []int {
     mymap := make(map[int]int)
@@ -60,5 +63,11 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	twosumCmd.Flags().IntVar(&target, "target", 0, "integer target")	
+	twosumCmd.Flags().IntVarP (&target, "target","t", 0, "integer target")
+	twosumCmd.MarkFlagRequired("target")
+    twosumCmd.Flags().StringSliceVarP(
+        &rangeFlagNumbers, "range", "r", []string{"1:10"}, 
+        "Range of numbers. Optional",
+    )
+	twosumCmd.MarkFlagRequired("rangeFlagNumbers")	
 }
