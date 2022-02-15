@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 aleksei alexey.pankratev@gmail.com
 
 */
 package cmd
@@ -18,7 +18,7 @@ var (
 
 var	twosumCmd = &cobra.Command{
 			  Use:   "twosum -r 1,2,3,4,5 -t 8 or twosum -r 1:5 -t 8",
-			  Short: "Implementation of the problem of two-sums for litcode",
+			  Short: "Implementation of the problem of Two Sums for litcode",
 			  Long: `https://leetcode.com/problems/two-sum/ 
 Given an array of integers nums and an integer target,
 return indices of the two numbers such that they add up to target.
@@ -38,9 +38,8 @@ func TwoSum(nums []int, target int) []int {
     for i := 0; i < len(nums); i++ {
 		j, ok := mymap[target-nums[i]]	
 		if verbose {
-			fmt.Printf("verbose: %v", verbose)
-        	fmt.Printf("indx:%v target %v, nums: %v, mymap: %v",i,target,nums[i], mymap)
-			fmt.Printf("%d: %v \n",j,ok )
+			fmt.Printf("arr_mymap=[%d %v] ",j,ok )
+        	fmt.Printf("indx:%v target %v, nums: %v, mymap: %v\n",i,target,nums[i], mymap)			
 		}       
         if ok {
             result := []int{j, i}
