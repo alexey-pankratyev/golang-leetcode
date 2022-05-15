@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
+	"math"
 
 	"github.com/spf13/cobra"
 )
@@ -27,29 +27,22 @@ Given a string s, find the length of the longest substring without repeating cha
 	},
 }
 
-func LongestSub (s string) string{
-	stringIter := ""
-	maxCount := 0
-	strResult := ""
-	for pos,rune := range s {
+func LongestSub (s string) string {
+	ans := 0	
+	strResult := map[string]int{}
+	i := 0
+	for j,rune := range s {
 		char := fmt.Sprintf("%c", rune)
-		if strings.Contains(stringIter,char) {
-			if maxCount < len(stringIter){
-				maxCount = len(stringIter)
-				strResult = stringIter	
-			}
-			i := strings.Index(stringIter, char)								
-			stringIter = stringIter[i+1:]+char
-		} else {
-			stringIter = stringIter + char
-			if pos == len(s)-1 && maxCount < len(stringIter){
-				strResult = stringIter	
-			}
-		}	
+		if _, ok := strResult[char]; ok {
+			i = int(math.Max(float64(strResult[char]),float64(i)))
+		}
+		ans = int(math.Max(float64(ans),float64(j-i+1)))
+		strResult[char] = j+1 
 	}
-	result := fmt.Sprintf("result: str-\"%v\", len-\"%v\"",strResult,len(strResult))
+	result := fmt.Sprintf("result: %v",ans)
 	return result
 }
+
 
 func init() {
 	rootCmd.AddCommand(longestsubCmd)
